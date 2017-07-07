@@ -1,6 +1,32 @@
 import todos from './todos'
 
+const todosFixture = [
+  {
+    text: 'Run the tests',
+    completed: false,
+    id: 0
+  }, {
+    text: 'Use Redux',
+    completed: false,
+    id: 1
+  }
+]
+
 describe('todos reducer', () => {
+  it('responds to a DELETE_TODO action', () => {
+    const result = todos(todosFixture, {
+      type: 'DELETE_TODO',
+      id: 1,
+    })
+
+    // expect(result).toEqual(todosFixture.filter((t) => t.id !== 1))
+    expect(result).toEqual([{
+      text: 'Run the tests',
+      completed: false,
+      id: 0
+    }])
+  })
+
   it('should handle initial state', () => {
     expect(
       todos(undefined, {})
@@ -47,17 +73,7 @@ describe('todos reducer', () => {
     ])
 
     expect(
-      todos([
-        {
-          text: 'Run the tests',
-          completed: false,
-          id: 0
-        }, {
-          text: 'Use Redux',
-          completed: false,
-          id: 1
-        }
-      ], {
+      todos(todosFixture, {
         type: 'ADD_TODO',
         text: 'Fix the tests',
         id: 2
